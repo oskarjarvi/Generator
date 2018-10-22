@@ -8,7 +8,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Test: HomeScreen,
 });
 
 HomeStack.navigationOptions = {
@@ -57,4 +57,5 @@ export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
+
 });
