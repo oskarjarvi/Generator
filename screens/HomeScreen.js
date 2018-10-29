@@ -22,7 +22,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
           <View style={styles.container}>
-            <Image />
+            <Image git s/>
             <Image />
             <Image />
             <Image />
