@@ -1,5 +1,6 @@
 import React from 'react';
-import {getValues} from '../api/api';
+import {getValues, getSub} from '../api/api';
+
 import {
   Image,
   Platform,
@@ -17,15 +18,22 @@ import { ExpoLinksView } from '@expo/samples';
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
     title: 'Character Generator',
+
   };
   componentDidMount() {
     getValues('classes').then(res => this.setState({classes:res}))
     getValues('races').then(res => this.setState({races:res}))
   };
+  componentDidUpdate()
+  {
+
+  }
   state = {
     initialCharacter: false,
     randomizedClass : false,
     randomizedRace : false,
+    subClass:false,
+    subRace:false,
     classes :false,
     races: false,
   }
@@ -49,29 +57,45 @@ GenerateCharacter()
   .then(this.GenerateItem(this.state.races).then(res=>this.setState({randomizedRace:res})))
   this.setState({initialCharacter:true})
 }
+generateSubinfo()
+{
+  getValues(this.state.randomizedClass.name).then(res=>this.setState({subClass:res}))
+}
 
   render() {
+    console.log(this.state.randomizedClass._id)
     return (
       <View style={styles.container}>
-
         <TouchableOpacity
          style={styles.GenerateButton}
-         onPress={() => this.GenerateCharacter()}
-       >
+         onPress={() => this.GenerateCharacter()}>
          <Text> Randomize your character </Text>
        </TouchableOpacity>
 
-          <Text>Race: {this.state.randomizedRace.name}</Text>
-          <Text>Class: {this.state.randomizedClass.name}</Text>
-        <Button onPress={() =>
-          this.GenerateItem(this.state.classes).then(res => this.setState({randomizedClass: res}))}
-           title="Generate a class" />
+          <View style={styles.information}>
+            <Text style={styles.descriptions}>Race: {this.state.randomizedRace.name}</Text>
+            {(this.state.initialCharacter) ?
+            <TouchableOpacity
+               style={styles.GenerateButton}
+               onPress={() => this.GenerateItem(this.state.races)
+               .then(res => this.setState({randomizedRace: res}))}>
+               <Text> Randomize your Race </Text>
+             </TouchableOpacity>
+             : <Text></Text>}
+          </View>
+          <Text>{this.state.subRace}</Text>
 
-
-         <Button onPress={() =>
-           this.GenerateItem(this.state.races).then(res => this.setState({randomizedRace: res}))}
-            title="Generate a Race" />
-          {this.state.randomizedRace ? <Text>Class: {this.state.randomizedRace.name} </Text> : <Text>Press button to generate a class </Text>}
+          <View style={styles.information}>
+            <Text style={styles.descriptions}>Class: {this.state.randomizedClass.name}</Text>
+            {(this.state.initialCharacter) ?
+            <TouchableOpacity
+               style={styles.GenerateButton}
+               onPress={() => this.GenerateItem(this.state.classes)
+               .then(res => this.setState({randomizedClass: res}))}>
+               <Text> Randomize your Class </Text>
+             </TouchableOpacity>
+             : <Text></Text>}
+          </View>
     </View>
   );
 }
@@ -84,16 +108,26 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
   },
+  information:
+  {
+    flex:1,
+    flexDirection:'row'
+  },
   GenerateButton:
   {
-    height:30,
+    height:40,
     alignItems:'center',
     justifyContent:'center',
     width:200,
     backgroundColor:'gray',
-    color:'white',
     borderRadius:10,
     marginLeft:'auto',
     marginRight:'auto',
+    marginTop:10,
+  },
+  descriptions:
+  {
+    fontSize:24,
+    margin:10
   }
 });

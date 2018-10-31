@@ -7,10 +7,20 @@ export function getValues(endpoint)
   .then(response =>
     {
       return response;
-    }
-    )
+    })
     .catch((error) => {
       console.log(error);
     })
-    console.log(data);
   }
+export function getSub(endpoint)
+{
+  return fetch(`${endpoint}`)
+  .then( res=>res.json())
+  .then(response =>
+  {
+    return response
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+}
