@@ -3,9 +3,14 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
+import LoginScreen from'../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import CharacterScreen from '../screens/CharacterScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+
+const LoginStack = createStackNavigator({
+  Login: LoginScreen,
+});
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,

@@ -12,7 +12,7 @@ export function getValues(endpoint)
       console.log(error);
     })
   }
-export function getSub(endpoint)
+export function getValuesFromUri(endpoint)
 {
   return fetch(`${endpoint}`)
   .then( res=>res.json())
