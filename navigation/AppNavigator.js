@@ -1,6 +1,6 @@
 import React from 'react';
 import { createSwitchNavigator } from 'react-navigation';
-import LoginScreen from '../screens/LoginScreen'
+import AuthScreen from '../screens/AuthScreen'
 import MainTabNavigator from './MainTabNavigator';
 
 export default createSwitchNavigator({
@@ -8,6 +8,7 @@ export default createSwitchNavigator({
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
 
   Main: MainTabNavigator,
-  Login: LoginScreen,
+  Auth: AuthScreen,
+
 }
 );
