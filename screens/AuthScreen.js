@@ -22,7 +22,7 @@ export default class AuthScreen extends React.Component
   state = {
     email: "",
     password:"",
-    error:"",
+    error:false,
 
   }
   onLogin = () =>
@@ -35,7 +35,9 @@ export default class AuthScreen extends React.Component
   {
     firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password)
     .then(()=> {this.props.navigation.navigate('Main')})
-    .catch(() => {this.setState({error:'Authentication failed', loading:false})})
+    .catch((error) => {
+      console.log(error)
+      this.setState({error: error, loading:false})})
   }
   renderButton()
   {
@@ -58,6 +60,14 @@ export default class AuthScreen extends React.Component
 
     </View>
   }
+  errorsubmit()
+  {
+    if(this.state.error)
+    {
+      return <Text> {this.state.error} </Text>
+    }
+
+  }
   render() {
     return(
       <View style={styles.container}>
@@ -73,6 +83,7 @@ export default class AuthScreen extends React.Component
           value={this.state.password}
           onChangeText={password =>this.setState({password})}
           />
+          {this.errorsubmit()}
         {this.renderButton()}
       </View>
 

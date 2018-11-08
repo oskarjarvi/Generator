@@ -1,6 +1,6 @@
 import React from 'react';
 import {getValues, getValuesFromUri} from '../api/api';
-
+import Backstories from '../components/data/';
 import {
   Image,
   Platform,
@@ -22,6 +22,7 @@ export default class LinksScreen extends React.Component {
   componentDidMount() {
     getValues('classes').then(res => this.setState({classes:res}))
     getValues('races').then(res => this.setState({races:res}))
+
   };
   componentDidUpdate()
   {
@@ -36,6 +37,7 @@ export default class LinksScreen extends React.Component {
     subRace:false,
     classes :false,
     races: false,
+    stories: false,
   }
 
   GenerateItem(array)
@@ -73,7 +75,6 @@ export default class LinksScreen extends React.Component {
 
     const item4= await getValuesFromUri(this.state.randomizedRace.url)
     this.setState({subRace: item4})
-
   }
   generateSubinfo(url, endpoint)
   {
@@ -135,6 +136,7 @@ export default class LinksScreen extends React.Component {
                 </View>
                   <Text style={styles.subinfo}> SubClass: {this.state.subClass.subclasses && this.state.subClass.subclasses[0].name}</Text>
                 </View>
+                <Text>BackgroundStory: {this.state.randomizedRace.name && Backstories[this.state.randomizedRace.name].name}</Text>
               </View>
             );
           }
