@@ -3,15 +3,16 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import CharacterScreen from '../screens/CharacterScreen';
+import LoginScreen from'../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+
+const LoginStack = createStackNavigator({
+  Login: LoginScreen,
 });
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+LoginStack.navigationOptions = {
+  tabBarLabel: 'Login',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -24,12 +25,12 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const GeneratorStack = createStackNavigator({
-  generator: CharacterScreen,
+const SignUpStack = createStackNavigator({
+  signUp: SignupScreen,
 });
 
-GeneratorStack.navigationOptions = {
-  tabBarLabel: 'Generator',
+SignUpStack.navigationOptions = {
+  tabBarLabel: 'SignUp',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -40,6 +41,6 @@ GeneratorStack.navigationOptions = {
 
 
 export default createBottomTabNavigator({
-  HomeStack,
-  GeneratorStack,
+  LoginStack,
+  SignUpStack,
 });

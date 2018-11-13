@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'expo';
-
+import { Ionicons, AntDesign} from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 export default class TabBarIcon extends React.Component {

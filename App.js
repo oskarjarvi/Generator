@@ -2,11 +2,9 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import MainTabNavigator from './navigation/MainTabNavigator';
 import * as firebase from 'firebase';
 import Config from './constants/Config';
-import HomeScreen from './screens/HomeScreen';
-import AuthScreen from './screens/AuthScreen';
-import MainTabNavigator from './navigation/MainTabNavigator';
 
 export default class App extends React.Component {
   constructor(props)
