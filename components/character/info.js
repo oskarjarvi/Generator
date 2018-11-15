@@ -17,7 +17,29 @@ export default class Info extends React.Component {
 initialCharacter: false,
   }
 
-
+renderSubInfo()
+{
+   if(this.props.title=="Race")
+   {
+     return <View style={styles.subinfo}>
+        <Text>SubRaces: </Text>
+          {this.props.subData.subraces && this.props.subData.subraces[0] ?
+          <FlatList
+            keyExtractor={(item, index) => index.toString()}
+            data={this.props.subData.subraces}
+            renderItem={({item}) =>
+            <Text>{item.name}</Text>}
+             />
+           : <Text>This race doesnt have a subrace</Text> }
+        </View>
+   }
+   else if(this.props.title=="Class")
+   {
+     return <View style={styles.subinfo}>
+       <Text>SubClass: {this.props.subData.subclasses && this.props.subData.subclasses[0].name} </Text>
+     </View>
+   }
+}
 render()
 {
   return(
@@ -25,31 +47,14 @@ render()
       <View style={styles.information}>
         <Text style={styles.descriptions}>{this.props.title}: {this.props.name}</Text>
           {this.props.children}
-          {this.props.title=="Race" &&
-            <View style={styles.subinfo}>
-               <Text>SubRaces: </Text>
-                 {this.state.subRace.subraces && this.state.subRace.subraces[0] ?
-                 <FlatList
-                   keyExtractor={(item, index) => index.toString()}
-                   data={this.state.subRace.subraces}
-                   renderItem={({item}) =>
-                   <Text>{item.name}</Text>}
-                    />
-                  : <Text>This race doesnt have a subrace</Text> }
-               </View>
-             }
                 </View>
+                {this.renderSubInfo()}
             </View>
   )
 }
 }
 const styles = StyleSheet.create({
-  container:
-  {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
+
   section:
   {
     height:100,
@@ -62,11 +67,9 @@ const styles = StyleSheet.create({
   },
   descriptions:
   {
+    marginRight:10,
     fontSize:24,
 
   },
-  subinfo:
-  {
 
-  }
 });

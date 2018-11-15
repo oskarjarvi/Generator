@@ -53,14 +53,14 @@ export default class LinksScreen extends React.Component {
 
     }
   render() {
-console.log(this.state.subRace)
+
     return (
       <View style={styles.container}>
         <CustomButton onPress={()=> this.generateCharacter()} text="Randomize your character"/>
 
         <Info title="Race" {...this.state.randomizedRace} subData={this.state.subRace}>
           {this.state.initialCharacter ?
-            <CustomButton onPress={()=> {utility.Race(this)}} text="Randomize your Race"/>
+            <CustomButton style={styles.generateButton}onPress={()=> {utility.Race(this)}} text="Randomize your Race"/>
             : <Text></Text>}
           </Info>
 
@@ -100,8 +100,8 @@ console.log(this.state.subRace)
       {
         fontSize:24,
       },
-      subinfo:
+      generateButton:
       {
-
+        justifyContent:'flex-end'
       }
     });

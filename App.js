@@ -3,6 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import MainTabNavigator from './navigation/MainTabNavigator';
+import LoginTabNavigator from './navigation/LoginTabNavigator';
+
 import * as firebase from 'firebase';
 import Config from './constants/Config';
 
@@ -29,10 +31,10 @@ export default class App extends React.Component {
 
   render() {
     if (!this.state.authenticated) {
-      return <AppNavigator />;
+      return <LoginTabNavigator />;
     }
 
-    return <MainTabNavigator />;
+    return <AppNavigator />;
   }
 }
 
