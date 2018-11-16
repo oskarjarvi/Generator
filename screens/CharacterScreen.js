@@ -40,7 +40,6 @@ export default class LinksScreen extends React.Component {
     stories: false,
   }
 
-
   generateCharacter()
   {
     utility.Class(this)
@@ -50,7 +49,6 @@ export default class LinksScreen extends React.Component {
   character = {
       Race: this.state.randomizedRace.name,
       Class: this.state.randomizedClass.name,
-
     }
   render() {
 
