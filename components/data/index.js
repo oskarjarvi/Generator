@@ -1,4 +1,3 @@
-
 var data = {
   'RaceInfo' : {
     "Elf":
@@ -6,7 +5,7 @@ var data = {
       'BackgroundStory': "Test",
       'Names':
       {
-        'namer': "Dain Torbalar",
+        'name': "Dain Torbalar",
         'name': "Saleh Daephyra",
         'name': "Nuvian Iligolor",
         'name': "Shaundyl Kelfir",
@@ -14,7 +13,6 @@ var data = {
         'name': "Elred Bimoira",
         'name': "Zaos Beithyra",
         'name': "Inialos Keyjor",
-
       }
     },
     "Human":

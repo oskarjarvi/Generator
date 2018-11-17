@@ -38,6 +38,7 @@ export default class LinksScreen extends React.Component {
     classes :false,
     races: false,
     stories: false,
+    CharacterName: false,
   }
 
   generateCharacter()
@@ -45,11 +46,24 @@ export default class LinksScreen extends React.Component {
     utility.Class(this)
     utility.Race(this)
     this.setState({initialCharacter:true})
-  }
-  character = {
-      Race: this.state.randomizedRace.name,
-      Class: this.state.randomizedClass.name,
+    if(this.state.randomizedRace)
+    {
+      utility.CharacterName(data.RaceInfo[this.state.randomizedRace.name], this)
+      console.log(this.state.CharacterName)
     }
+  }
+
+  saveCharacter()
+  {
+    character =
+      {
+        Name: this.state.CharacterName,
+        Race: this.state.randomizedRace.name,
+        Class: this.state.randomizedClass.name,
+      }
+      utility.Save(character)
+  }
+
   render() {
 
     return (
@@ -68,9 +82,9 @@ export default class LinksScreen extends React.Component {
               : <Text></Text>}
             </Info>
 
-            <Text>BackgroundStory: {this.state.randomizedRace.name && data.RaceInfo[this.state.randomizedRace.name].Names.namer}</Text>
+            <Text>BackgroundStory: </Text>
 
-            <CustomButton onPress={()=> {}} text="Save your Character"/>
+            <CustomButton onPress={()=>{this.saveCharacter()} } text="Save your Character"/>
 
           </View>
         );

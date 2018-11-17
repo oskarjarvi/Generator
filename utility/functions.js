@@ -1,5 +1,5 @@
 import {getValues, getValuesFromUri} from '../utility/api';
-
+import * as firebase from 'firebase';
 class Utility
 {
   async Class(parent)
@@ -17,6 +17,11 @@ class Utility
 
     const item4= await getValuesFromUri(parent.state.randomizedRace.url)
     parent.setState({subRace: item4})
+  }
+  async CharacterName(array, parent)
+  {
+    const Name = await this.Name(array)
+    parent.setState({CharacterName: Name})
   }
   Subinfo(url, endpoint)
   {
@@ -44,9 +49,23 @@ class Utility
       resolve(item)
     });
   }
+Name(array)
+  {
+    return new Promise((resolve,reject) =>
+    {
+      let item =array.Names[Math.floor(Math.random()*array.length)];
+      if(!item)
+      {
+        reject('couldnt generate a random value')
+      }
+      resolve(item)
+    });
+  }
   Save(character)
   {
-
+    user = firebase.auth().currentUser.uid
+    console.log(user)
+    firebase.database().ref(`user/${user}/${character.Name}`).push(character)
   }
 }
 export default Utility
