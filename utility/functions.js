@@ -53,7 +53,7 @@ Name(array)
   {
     return new Promise((resolve,reject) =>
     {
-      let item =array.Names[Math.floor(Math.random()*array.length)];
+      let item =array.Names[Math.floor(Math.random()*array.Names.length)];
       if(!item)
       {
         reject('couldnt generate a random value')

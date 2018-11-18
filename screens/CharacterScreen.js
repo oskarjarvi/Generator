@@ -3,6 +3,7 @@ import {getValues, getValuesFromUri} from '../utility/api';
 import data from '../components/data/';
 import Utility from '../utility/functions';
 import CustomButton from '../components/custombutton'
+import * as firebase from 'firebase'
 import {
   Image,
   Platform,
@@ -20,100 +21,55 @@ import Info from '../components/character/info';
 const utility = new Utility()
 
 export default class LinksScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Character Generator',
-  };
-  componentDidMount() {
-    getValues('classes').then(res => this.setState({classes:res}))
-    getValues('races').then(res => this.setState({races:res}))
-  };
-
   state = {
-    initialCharacter: false,
-    randomizedClass : false,
-    randomizedRace : false,
-    subInfo:false,
-    subClass:false,
-    subRace:false,
-    classes :false,
-    races: false,
-    stories: false,
-    CharacterName: false,
+character:false
   }
 
-  generateCharacter()
+  componentDidMount()
   {
-    utility.Class(this)
-    utility.Race(this)
-    this.setState({initialCharacter:true})
-    if(this.state.randomizedRace)
-    {
-      utility.CharacterName(data.RaceInfo[this.state.randomizedRace.name], this)
-      console.log(this.state.CharacterName)
-    }
-  }
+    // userRef = firebase.auth().currentUser.uid
+    //
+    // firebase.database().ref(`Users/${userRef}`).once('value', snapshot => {
+    //     console.log(snapshot.val())
+    })
+}
 
-  saveCharacter()
-  {
-    character =
-      {
-        Name: this.state.CharacterName,
-        Race: this.state.randomizedRace.name,
-        Class: this.state.randomizedClass.name,
-      }
-      utility.Save(character)
-  }
 
   render() {
 
     return (
-      <View style={styles.container}>
-        <CustomButton onPress={()=> this.generateCharacter()} text="Randomize your character"/>
+      <View>
 
-        <Info title="Race" {...this.state.randomizedRace} subData={this.state.subRace}>
-          {this.state.initialCharacter ?
-            <CustomButton style={styles.generateButton}onPress={()=> {utility.Race(this)}} text="Randomize your Race"/>
-            : <Text></Text>}
-          </Info>
+      </View>
 
-          <Info title="Class" {...this.state.randomizedClass} subData={this.state.subClass}>
-            {(this.state.initialCharacter) ?
-              <CustomButton onPress={()=> {utility.Class(this)}} text="Randomize your Class"/>
-              : <Text></Text>}
-            </Info>
 
-            <Text>BackgroundStory: </Text>
+    );
+  }
+}
 
-            <CustomButton onPress={()=>{this.saveCharacter()} } text="Save your Character"/>
-
-          </View>
-        );
-      }
-    }
-
-    const styles = StyleSheet.create({
-      container:
-      {
-        flex: 1,
-        paddingTop: 15,
-        backgroundColor: '#fff',
-      },
-      section:
-      {
-        height:100,
-        margin:10,
-        flexDirection:'column'
-      },
-      information:
-      {
-        flexDirection:'row'
-      },
-      descriptions:
-      {
-        fontSize:24,
-      },
-      generateButton:
-      {
-        justifyContent:'flex-end'
-      }
-    });
+const styles = StyleSheet.create({
+  container:
+  {
+    flex: 1,
+    paddingTop: 15,
+    backgroundColor: '#fff',
+  },
+  section:
+  {
+    height:100,
+    margin:10,
+    flexDirection:'column'
+  },
+  information:
+  {
+    flexDirection:'row'
+  },
+  descriptions:
+  {
+    fontSize:24,
+  },
+  generateButton:
+  {
+    justifyContent:'flex-end'
+  }
+});

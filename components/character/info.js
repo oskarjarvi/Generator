@@ -13,9 +13,7 @@ import {
 } from 'react-native';
 
 export default class Info extends React.Component {
-  state= {
-initialCharacter: false,
-  }
+
 
 renderSubInfo()
 {
@@ -23,6 +21,7 @@ renderSubInfo()
    {
      return <View style={styles.subinfo}>
         <Text>SubRaces: </Text>
+
           {this.props.subData.subraces && this.props.subData.subraces[0] ?
           <FlatList
             keyExtractor={(item, index) => index.toString()}
@@ -30,7 +29,7 @@ renderSubInfo()
             renderItem={({item}) =>
             <Text>{item.name}</Text>}
              />
-           : <Text>This race doesnt have a subrace</Text> }
+           : <Text>This race doesnt have a subrace or you havent generated a race yet</Text> }
         </View>
    }
    else if(this.props.title=="Class")
