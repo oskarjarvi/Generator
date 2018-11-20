@@ -4,6 +4,7 @@ import data from '../../components/data/';
 import Utility from '../../utility/functions';
 import CustomButton from '../../components/custombutton';
 import Info from '../../components/character/info';
+import {Constants} from 'expo'
 import {
   Image,
   Platform,
@@ -14,77 +15,109 @@ import {
   View,
   FlatList,
   TouchableHighlight,
-  Button
+  Button,
+  AsyncStorage,
+  ImageBackground
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 const utility = new Utility()
 
 export default class RaceScreen extends React.Component {
-
+  static navigationOptions = {
+    header:null
+  };
   componentDidMount() {
-    getValues('classes').then(res => this.setState({classes:res}))
     getValues('races').then(res => this.setState({races:res}))
+    this.getParams()
+    this.getClassName()
   };
 
   state = {
-    initialCharacter: false,
-    randomizedRace : false,
     subRace:false,
-    classes :false,
     races: false,
-    stories: false,
     CharacterName: false,
+    initialCharacter: false,
+    className: false
   }
 
   renderDetails()
   {
     if(this.state.subRace)
     {
-      return <View styles={styles.descriptions}>
+      return <View>
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           data={this.state.subRace.traits}
           renderItem={({item}) =>
-          <Text>{item.name}</Text>}
-           />
-      </View>
+          <Text style={styles.descriptions}>{item.name}</Text>}
+            />
+        </View>
+      }
     }
-  }
-
-  saveCharacter()
-  {
-    if(this.state.randomizedRace)
+    async getClassName()
     {
-      utility.CharacterName(data.RaceInfo[this.state.randomizedRace.name], this)
-      console.log(this.state.CharacterName)
+      utility.retrieveItem('Class')
+      .then((item) =>
+    {
+      this.setState({className: item})
+    })
+
     }
-    // character =
-    //   {
-    //     Name: this.state.CharacterName,
-    //     Race: this.state.randomizedRace.name,
-    //     Class: this.state.randomizedClass.name,
-    //   }
-      // utility.Save(character)
-  }
+    async saveCharacter()
+    {
+      if(this.state.randomizedRace)
+      {
+        utility.storeItem('CharacterName', this.state.CharacterName)
 
-  render() {
+        character =
+        {
+          Name: this.state.CharacterName,
+          Race: this.state.subRace,
+          Class: this.state.className,
+        }
+        utility.Save(character)
+      }
+    }
+    async getParams()
+    {
+      const Name = this.props.navigation.getParam('Name', this.state.CharacterName)
+      this.setState({CharacterName: Name})
+      const Race = this.props.navigation.getParam('Race', this.state.randomizedRace)
+      if(Race)
+      {
+        this.setState({subRace: Race})
+      }
+      const Class = this.props.navigation.getParam('Class', this.state.className)
+      if(Class)
+      {
+        utility.storeItem('ClassName', Class)
+      }
 
-    return (
-      <View style={styles.container}>
-        <CustomButton style={styles.generateButton}onPress={()=> {utility.Race(this)}} text="Randomize your Race"/>
+    }
 
-        <Info title="Race" {...this.state.randomizedRace} subData={this.state.subRace}>
-          </Info>
-          <Text> Description:</Text>
-          <Text>{this.state.subRace.alignment} </Text>
-          <Text>Age: {this.state.subRace.age}</Text>
-          <Text>Languages: {this.state.subRace.language_desc} </Text>
-          <Text>Size: {this.state.subRace.size_description}</Text>
-          <Text>Traits:</Text>
+    render() {
+      return (
+        <ScrollView style={styles.container}>
+          <ImageBackground source={require('../../assets/images/paper.png')} style={styles.background}>
+            <CustomButton style={styles.generateButton}onPress={()=> {utility.getRace(this)}} text="Randomize your Race"/>
+
+            <Info title="Race" {...this.state.randomizedRace} subData={this.state.subRace}/>
+
+            <Text style={styles.sectionTitle}> Description:</Text>
+            <Text style={styles.descriptions}>{this.state.subRace.alignment} </Text>
+            <Text style={styles.sectionTitle}>Age:</Text>
+            <Text style={styles.descriptions}>{this.state.subRace.age}</Text>
+            <Text style={styles.sectionTitle} >Languages:</Text>
+            <Text style={styles.descriptions}>{this.state.subRace.language_desc}</Text>
+            <Text style={styles.sectionTitle} >Size: </Text>
+            <Text style={styles.descriptions}> {this.state.subRace.size_description}</Text>
+            <Text style={styles.sectionTitle}>Traits:</Text>
             {this.renderDetails()}
-          <CustomButton onPress={()=>{this.saveCharacter()} } text="Save your Character"/>
-
-          </View>
+            {this.state.initialCharacter ?
+              <CustomButton onPress={()=>{this.saveCharacter()} } text="Save your Character"/>
+              : <Text></Text> }
+            </ImageBackground>
+          </ScrollView>
         );
       }
     }
@@ -92,9 +125,8 @@ export default class RaceScreen extends React.Component {
     const styles = StyleSheet.create({
       container:
       {
-        flex: 1,
-        paddingTop: 15,
         backgroundColor: '#fff',
+        paddingTop: Constants.statusBarHeight
       },
       section:
       {
@@ -102,16 +134,35 @@ export default class RaceScreen extends React.Component {
         margin:10,
         flexDirection:'column'
       },
+      sectionTitle:
+      {
+        marginTop:10,
+        fontSize: 20,
+        marginLeft: 10,
+      },
       information:
       {
         flexDirection:'row'
       },
       descriptions:
       {
-        fontSize:24,
+        marginLeft:10,
       },
       generateButton:
       {
-        justifyContent:'flex-end'
+        height:40,
+        alignItems:'center',
+        justifyContent:'center',
+        width:200,
+        backgroundColor:'gray',
+        borderRadius:10,
+        marginLeft:'auto',
+        marginRight:'auto',
+      },
+      background:
+      {
+        width:'100%',
+        height:800,
+        paddingTop:20
       }
     });

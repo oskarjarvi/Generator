@@ -20,7 +20,7 @@ renderSubInfo()
    if(this.props.title=="Race")
    {
      return <View style={styles.subinfo}>
-        <Text>SubRaces: </Text>
+        <Text style={styles.subTitle}>SubRaces: </Text>
 
           {this.props.subData.subraces && this.props.subData.subraces[0] ?
           <FlatList
@@ -44,8 +44,7 @@ render()
   return(
     <View style={styles.section}>
       <View style={styles.information}>
-        <Text style={styles.descriptions}>{this.props.title}: {this.props.name}</Text>
-          {this.props.children}
+        <Text style={styles.title}>{this.props.title}: {this.props.subData.name}</Text>
                 </View>
                 {this.renderSubInfo()}
             </View>
@@ -56,19 +55,23 @@ const styles = StyleSheet.create({
 
   section:
   {
-    height:100,
-    margin:10,
+    paddingRight:20,
+    marginTop:10,
+    marginLeft:10,
     flexDirection:'column'
   },
   information:
   {
     flexDirection:'row'
   },
-  descriptions:
+  title:
   {
     marginRight:10,
     fontSize:24,
-
   },
+  subTitle:
+  {
+    fontStyle:'italic'
+  }
 
 });

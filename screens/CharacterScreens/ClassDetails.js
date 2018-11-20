@@ -14,7 +14,9 @@ import {
   View,
   FlatList,
   TouchableHighlight,
-  Button
+  Button,
+  ImageBackground,
+  AsyncStorage,
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 
@@ -24,7 +26,7 @@ export default class ClassScreen extends React.Component {
 
   componentDidMount() {
     getValues('classes').then(res => this.setState({classes:res}))
-    getValues('races').then(res => this.setState({races:res}))
+    this.getClassName()
   };
 
   state = {
@@ -33,25 +35,14 @@ export default class ClassScreen extends React.Component {
     classes :false,
   }
 
-
-  saveCharacter()
-  {
-    character =
-      {
-        Name: this.state.CharacterName,
-        Race: this.state.randomizedRace.name,
-        Class: this.state.randomizedClass.name,
-      }
-      utility.Save(character)
-  }
-  renderProficiencies()
+  renderLists(data)
   {
     if(this.state.subClass)
     {
       return <View styles={styles.descriptions}>
         <FlatList
           keyExtractor={(item, index) => index.toString()}
-          data={this.state.subClass.proficiencies}
+          data={data}
           renderItem={({item}) =>
           <Text>{item.name}</Text>}
            />
@@ -59,15 +50,29 @@ export default class ClassScreen extends React.Component {
     }
   }
 
+  async getClassName()
+  {
+    utility.retrieveItem('ClassName')
+    .then((item) =>
+  {
+    this.setState({subClass: item})
+  })
+
+  }
+
+
   render() {
+    console.log(this.state.startingGear)
     return (
       <View style={styles.container}>
-        <CustomButton onPress={()=> {utility.Class(this)}} text="Randomize your Class"/>
-          <Info title="Class" {...this.state.randomizedClass} subData={this.state.subClass}>
-            </Info>
-            <Text> Proficiencient in</Text>{this.renderProficiencies()}
-            <CustomButton onPress={()=>{this.saveCharacter()} } text="Save your Character"/>
+        <ImageBackground source={require('../../assets/images/paper.png')} style={styles.background}>
+        <CustomButton onPress={()=> {utility.getClass(this)}} text="Randomize your Class"/>
+          <Info title="Class" {...this.state.randomizedClass} subData={this.state.subClass} />
 
+            <Text> Proficiencient in</Text>{this.renderLists(this.state.subClass.proficiencies)}
+
+              <Text>Starting Equipment:</Text>
+            </ImageBackground>
           </View>
         );
       }
@@ -97,5 +102,11 @@ export default class ClassScreen extends React.Component {
       generateButton:
       {
         justifyContent:'flex-end'
-      }
+      },
+      background:
+      {
+        width:'100%',
+        height:800,
+        paddingTop:20
+      },
     });

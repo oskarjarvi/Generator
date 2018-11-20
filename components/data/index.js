@@ -93,8 +93,8 @@ var data = {
     {
       'BackgroundStory': "omg",
       'Names':
-
-      [ "Dain Torbalar",
+      [
+      "Dain Torbalar",
       "Saleh Daephyra",
       "Nuvian Iligolor",
       "Shaundyl Kelfir",

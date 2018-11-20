@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator, createAppContainer } from 'react-navigation';
 import { Icon } from 'expo';
 import { Ionicons} from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
@@ -27,33 +27,17 @@ const DrawerNavigation = createStackNavigator({
 })
 
 
+const CharactersStack = createStackNavigator({
+  characters: CharacterScreen,
+});
 
 const RaceStack = createStackNavigator({
   race: RaceDetails
 });
-const ClassStack = createStackNavigator({
-  class: ClassDetails
-});
-const BackgroundStack = createStackNavigator({
-  background: BackgroundDetails
-});
-const GeneratorStack = createStackNavigator({
-  generator: CharacterScreen,
-});
 
-
-GeneratorStack.navigationOptions= {
-  tabBarLabel: 'Generator',
-  tabBarIcon: ({focused}) => (
-    <Icon.Entypo
-      focused={focused}
-      name={'retweet'}
-      size={26}
-    />
-  )
-}
 RaceStack.navigationOptions= {
   tabBarLabel: 'Race',
+  passProps: {myProp: 'fooooo'},
   tabBarIcon: ({focused}) => (
     <Icon.MaterialIcons
       focused={focused}
@@ -62,6 +46,10 @@ RaceStack.navigationOptions= {
     />
   )
 }
+const ClassStack = createStackNavigator({
+  class: ClassDetails
+});
+
 ClassStack.navigationOptions= {
   tabBarLabel: 'Class',
   tabBarIcon: ({focused}) => (
@@ -72,6 +60,9 @@ ClassStack.navigationOptions= {
     />
   )
 }
+const BackgroundStack = createStackNavigator({
+  background: BackgroundDetails
+});
 BackgroundStack.navigationOptions= {
   tabBarLabel: 'Background Story',
   tabBarIcon: ({focused}) => (
@@ -85,8 +76,7 @@ BackgroundStack.navigationOptions= {
 
 
 export default createBottomTabNavigator({
-  GeneratorStack,
-  ClassStack,
   RaceStack,
+  ClassStack,
   BackgroundStack,
 });

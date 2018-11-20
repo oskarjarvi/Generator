@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Icon } from 'expo';
+import { Ionicons} from '@expo/vector-icons';
 import { WebBrowser } from 'expo';
 import * as firebase from 'firebase';
 import { MonoText } from '../components/StyledText';
@@ -32,16 +34,37 @@ logout()
     return (
       <View style={styles.container}>
         <View style={styles.container}>
-          <TouchableOpacity onPress={()=> this.logout() }>
-            <Image source={{uri:"https://via.placeholder.com/150"}} style={styles.images} />
-            <Text> Log out</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> this.props.navigation.navigate('generator')}>
-            <Image source={{uri:"https://via.placeholder.com/150"}} style={styles.images} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=> this.props.navigation.navigate('generator')}>
-            <Image source={{uri:"https://via.placeholder.com/150"}} style={styles.images} />
-          </TouchableOpacity>
+          <View style={styles.iconContainer}>
+          <Icon.MaterialCommunityIcons
+              name="logout"
+              size={40}
+              onPress={() => this.logout()}
+              style={styles.icon}
+              />
+
+            <Text>Log out</Text>
+           </View>
+
+            <View style={styles.iconContainer}>
+              <Icon.Entypo
+                  name="qq"
+                  size={40}
+                  onPress={() => this.props.navigation.navigate('Characters')}
+                  style={styles.icon}/>
+
+                <Text>Generator</Text>
+              </View>
+              <View style={styles.iconContainer}>
+                <Icon.Entypo
+                    name="user"
+                    size={40}
+                    onPress={() => this.props.navigation.navigate('race')}
+                    style={styles.icon}/>
+
+                  <Text>Profile</Text>
+                </View>
+
+
         </View>
       </View>
     );
@@ -54,12 +77,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection:'row',
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    backgroundColor:'#e0e0e2'
   },
-  images:
+  iconContainer:
   {
-    margin:10,
-    width:100,
-    height:100,
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center',
+    margin:25,
+    borderWidth:0.5,
+    backgroundColor:'#d9d9db',
+    borderColor:'#d0d4db',
+    padding:10
+  },
+  icon: {
+
   }
 });
