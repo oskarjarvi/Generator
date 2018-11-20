@@ -28,7 +28,8 @@ export default class BackgroundScreen extends React.Component {
     title: 'Character Generator',
   };
   state = {
-      Race:false
+      Race:false,
+      Story:false,
   }
   componentDidMount()
   {
@@ -38,19 +39,18 @@ export default class BackgroundScreen extends React.Component {
   {
     utility.retrieveItem('RaceName').then((item) =>
     {
-      if(item.name !== this.state.Race.name)
-      {
-        this.setState({Race:item})
-      }
-
-    })
-
+        this.setState({Race:item.name})
+    }).then(
+      this.getStory()
+    )
   }
   getStory()
   {
-    return <View>
-      <Text>{this.state.Race && data.RaceInfo[this.state.Race.name].BackgroundStory} </Text>
-    </View>
+    utility.getStory(data.RaceInfo[this.state.Race]).then((item) => {
+      console.log(item)
+      this.setState({Story: item})
+    })
+
   }
   render() {
     return (
@@ -58,7 +58,7 @@ export default class BackgroundScreen extends React.Component {
         <ImageBackground source={require('../../assets/images/paper.png')} style={styles.background}>
 
         <CustomButton style={styles.generateButton}onPress={()=> this.getCharacterName()} text="Generate the backgroundstory"/>
-        {this.getStory()}
+        <Text>{this.state.Story}</Text>
       </ImageBackground>
       </View>
     );

@@ -74,6 +74,18 @@ getName(array)
       resolve(item)
     });
   }
+  getStory(array)
+  {
+    return new Promise((resolve,reject) =>
+    {
+      let item =array.BackgroundStory[Math.floor(Math.random()*array.BackgroundStory.length)];
+      if(!item)
+      {
+        reject('couldnt generate a random value')
+      }
+      resolve(item)
+    });
+  }
 
   Save(character)
   {
