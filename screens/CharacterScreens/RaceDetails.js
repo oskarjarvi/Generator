@@ -5,6 +5,8 @@ import Utility from '../../utility/functions';
 import CustomButton from '../../components/custombutton';
 import Info from '../../components/character/info';
 import {Constants} from 'expo'
+import { Icon } from 'expo';
+import { Ionicons} from '@expo/vector-icons';
 import {
   Image,
   Platform,
@@ -90,7 +92,7 @@ export default class RaceScreen extends React.Component {
       const Class = this.props.navigation.getParam('Class', this.state.className)
       if(Class)
       {
-        utility.storeItem('ClassName', Class)
+        utility.storeItem('Class', Class)
       }
 
     }
@@ -99,8 +101,14 @@ export default class RaceScreen extends React.Component {
       return (
         <ScrollView style={styles.container}>
           <ImageBackground source={require('../../assets/images/paper.png')} style={styles.background}>
+            <Icon.Ionicons
+              name="ios-arrow-round-back"
+              size={40}
+              onPress={() => this.props.navigation.navigate('Characters')}
+              style={styles.icon}
+              />
             <CustomButton style={styles.generateButton}onPress={()=> {utility.getRace(this)}} text="Randomize your Race"/>
-
+            <Text style={styles.sectionTitle}>Character Name: {this.state.CharacterName}</Text>
             <Info title="Race" {...this.state.randomizedRace} subData={this.state.subRace}/>
 
             <Text style={styles.sectionTitle}> Description:</Text>
@@ -162,7 +170,10 @@ export default class RaceScreen extends React.Component {
       background:
       {
         width:'100%',
-        height:800,
+        height:1000,
         paddingTop:20
+      },
+      icon: {
+        margin:15
       }
     });

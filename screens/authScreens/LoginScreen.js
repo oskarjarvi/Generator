@@ -12,25 +12,27 @@ import {
   FlatList,
   TouchableHighlight,
   Button,
-  TextInput
+  TextInput,
+  ImageBackground
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 
-export default class SignupScreen extends React.Component
+export default class LoginScreen extends React.Component
 {
+  navigationOptions= {
+    header:null
+  }
   state =
   {
     email: "",
     password:"",
     error:false,
   }
-  onSignUp = () =>
+  onLogin = () =>
   {
-    firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password)
-    .then(()=> {this.props.navigation.navigate('Main')})
-    .catch((error) => {
-      console.log(error)
-      this.setState({error: error, loading:false})})
+    firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password)
+    .then(()=> {this.props.navigation.navigate('SetUp')})
+    .catch(() => {this.setState({error:'Authentication failed', loading:false})})
   }
   renderButton()
   {
@@ -39,11 +41,10 @@ export default class SignupScreen extends React.Component
       return <Text>Loading</Text>
     }
     return <View>
-
       <TouchableOpacity
-        onPress={() => this.onSignUp()}
+        onPress={() => this.onLogin()}
         style={styles.button}>
-        <Text>Sign Up</Text>
+        <Text>Login</Text>
       </TouchableOpacity>
 
     </View>
@@ -54,11 +55,11 @@ export default class SignupScreen extends React.Component
     {
       return <Text> {this.state.error} </Text>
     }
-
   }
   render(){
     return (
       <View style={styles.container}>
+
         <FormLabel>Email</FormLabel>
         <FormInput
           value={this.state.email}
@@ -71,7 +72,9 @@ export default class SignupScreen extends React.Component
           />
           {this.errorsubmit()}
         {this.renderButton()}
+
       </View>
+
     )
   }
 }
@@ -100,5 +103,10 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 8
-  }
+  },
+  background:{
+    width:'100%',
+    height:900,
+    paddingTop:20
+  },
 });

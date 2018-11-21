@@ -4,6 +4,10 @@ import data from '../../components/data/';
 import Utility from '../../utility/functions';
 import CustomButton from '../../components/custombutton'
 import Info from '../../components/character/info';
+import {Constants} from 'expo'
+import { Icon } from 'expo';
+import { Ionicons} from '@expo/vector-icons';
+
 import {
   Image,
   Platform,
@@ -23,7 +27,9 @@ import { ExpoLinksView } from '@expo/samples';
 const utility = new Utility()
 
 export default class ClassScreen extends React.Component {
-
+  static navigationOptions = {
+    header:null
+  };
   componentDidMount() {
     getValues('classes').then(res => this.setState({classes:res}))
     this.getClassName()
@@ -44,34 +50,36 @@ export default class ClassScreen extends React.Component {
           keyExtractor={(item, index) => index.toString()}
           data={data}
           renderItem={({item}) =>
-          <Text>{item.name}</Text>}
-           />
-      </View>
+          <Text style={styles.descriptions}>{item.name}</Text>}
+            />
+        </View>
+      }
     }
-  }
 
-  async getClassName()
-  {
-    utility.retrieveItem('ClassName')
-    .then((item) =>
-  {
-    this.setState({subClass: item})
-  })
+    async getClassName()
+    {
+      utility.retrieveItem('Class')
+      .then((item) =>
+      {
+        this.setState({subClass: item})
+      })
 
-  }
+    }
 
 
-  render() {
-    console.log(this.state.startingGear)
-    return (
-      <View style={styles.container}>
-        <ImageBackground source={require('../../assets/images/paper.png')} style={styles.background}>
-        <CustomButton onPress={()=> {utility.getClass(this)}} text="Randomize your Class"/>
-          <Info title="Class" {...this.state.randomizedClass} subData={this.state.subClass} />
-
-            <Text> Proficiencient in</Text>{this.renderLists(this.state.subClass.proficiencies)}
-
-              <Text>Starting Equipment:</Text>
+    render() {
+      return (
+        <View style={styles.container}>
+          <ImageBackground source={require('../../assets/images/paper.png')} style={styles.background}>
+            <Icon.Ionicons
+              name="ios-arrow-round-back"
+              size={40}
+              onPress={() => this.props.navigation.navigate('Characters')}
+              style={styles.icon}
+              />
+            <CustomButton onPress={()=> {utility.getClass(this)}} text="Randomize your Class"/>
+            <Info title="Class" {...this.state.randomizedClass} subData={this.state.subClass} />
+            <Text style={styles.sectionTitle}> Proficiencient in</Text>{this.state.subClass && this.renderLists(this.state.subClass.proficiencies)}
             </ImageBackground>
           </View>
         );
@@ -81,9 +89,8 @@ export default class ClassScreen extends React.Component {
     const styles = StyleSheet.create({
       container:
       {
-        flex: 1,
-        paddingTop: 15,
         backgroundColor: '#fff',
+        paddingTop: Constants.statusBarHeight
       },
       section:
       {
@@ -91,22 +98,24 @@ export default class ClassScreen extends React.Component {
         margin:10,
         flexDirection:'column'
       },
-      information:
+      sectionTitle:
       {
-        flexDirection:'row'
+        marginTop:10,
+        fontSize: 20,
+        marginLeft: 10,
       },
       descriptions:
       {
-        fontSize:24,
+        margin:15,
       },
-      generateButton:
-      {
-        justifyContent:'flex-end'
-      },
+
       background:
       {
         width:'100%',
         height:800,
         paddingTop:20
       },
+      icon: {
+        margin:15
+      }
     });

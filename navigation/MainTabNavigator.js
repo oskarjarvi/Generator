@@ -9,23 +9,6 @@ import BackgroundDetails from '../screens/CharacterScreens/BackgroundDetails';
 import RaceDetails from '../screens/CharacterScreens/RaceDetails';
 import ClassDetails from '../screens/CharacterScreens/ClassDetails';
 
-const DrawerStack = createDrawerNavigator({
-  screen1: HomeScreen,
-  screen2: CharacterScreen
-})
-
-const DrawerNavigation = createStackNavigator({
-  DrawerStack:{ screen: DrawerStack }
-}, {
-  headerMode: 'float',
-  navigationOptions: ({navigation}) => ({
-    headerStyle: {backgroundColor: '#4C3E54'},
-    title: 'Welcome!',
-    headerTintColor: 'white',
-    headerLeft: <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>
-  })
-})
-
 
 const CharactersStack = createStackNavigator({
   characters: CharacterScreen,

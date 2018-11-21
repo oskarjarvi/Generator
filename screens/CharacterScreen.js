@@ -5,6 +5,8 @@ import Utility from '../utility/functions';
 import CustomButton from '../components/custombutton'
 import * as firebase from 'firebase'
 import {ListItem} from 'react-native-elements'
+import { Icon } from 'expo';
+import { Ionicons} from '@expo/vector-icons';
 import {
   Image,
   Platform,
@@ -24,10 +26,12 @@ import Info from '../components/character/info';
 const utility = new Utility()
 
 export default class CharacterScreen extends React.Component {
+  navigationOptions= {
+    header:null
+  }
   state = {
     characters:false
   }
-
 
   componentDidMount()
   {
@@ -35,8 +39,8 @@ export default class CharacterScreen extends React.Component {
   }
   getCharacters()
   {
-    userRef = firebase.auth().currentUser.uid
-    firebase.database().ref(`user/${userRef}`).on('value', (data) => {
+     userRef = firebase.auth().currentUser.uid
+    firebase.database().ref(`user/characters/${userRef}`).on('value', (data) => {
       let keys = Object.values(data.val())
       if(keys)
       {
@@ -49,11 +53,10 @@ export default class CharacterScreen extends React.Component {
     <ListItem
       title={item.Name}
       subTitle={item.Race}
-      containerStyle={{ borderBottomWidth: 0 }}
+      containerStyle={{ borderBottomWidth: 1, borderBottomColor:"black"}}
+      chevronColor="black"
       onPress={() => this.props.navigation.navigate('race', {Race: item.Race, Name: item.Name, Class: item.Class})}/>
   )
-
-
   renderCharacterList()
   {
     if(this.state.characters)
@@ -76,10 +79,17 @@ export default class CharacterScreen extends React.Component {
 
     return (
       <View>
-      <ImageBackground source={require('..//assets/images/paper.png')} style={styles.background}>
+      <ImageBackground source={require('../assets/images/paper.png')} style={styles.background}>
+        <Icon.Ionicons
+          name="ios-arrow-round-back"
+          size={40}
+          onPress={() => this.props.navigation.navigate('Home')}
+          style={styles.icon}
+          />
+
         <Text style={styles.sectionTitle}>Existing Characters:</Text>
         {this.renderCharacterList()}
-        <TouchableOpacity onPress={()=> this.props.navigation.navigate('race')}><Text>Create a new character</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.generateButton}onPress={()=> this.props.navigation.navigate('race')}><Text>Create a new character</Text></TouchableOpacity>
       </ImageBackground>
       </View>
     );
@@ -103,10 +113,14 @@ const styles = StyleSheet.create({
   {
     margin:20,
     flex:1,
+    height:20
   },
   background:{
     width:'100%',
-    height:800,
+    height:900,
     paddingTop:20
+  },
+  icon: {
+    margin:15
   }
 });

@@ -16,19 +16,25 @@ import {
 } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 
-export default class LoginScreen extends React.Component
+export default class SignupScreen extends React.Component
 {
+  navigationOptions =
+ {
+    header:null
+  }
   state =
   {
     email: "",
     password:"",
     error:false,
   }
-  onLogin = () =>
+  onSignUp = () =>
   {
-    firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password)
-    .then(()=> {this.props.navigation.navigate('Home')})
-    .catch(() => {this.setState({error:'Authentication failed', loading:false})})
+    firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password)
+    .then(()=> {this.props.navigation.navigate('Main')})
+    .catch((error) => {
+      console.log(error)
+      this.setState({error: error, loading:false})})
   }
   renderButton()
   {
@@ -37,10 +43,11 @@ export default class LoginScreen extends React.Component
       return <Text>Loading</Text>
     }
     return <View>
+
       <TouchableOpacity
-        onPress={() => this.onLogin()}
+        onPress={() => this.onSignUp()}
         style={styles.button}>
-        <Text>Login</Text>
+        <Text>Sign Up</Text>
       </TouchableOpacity>
 
     </View>
@@ -51,6 +58,7 @@ export default class LoginScreen extends React.Component
     {
       return <Text> {this.state.error} </Text>
     }
+
   }
   render(){
     return (
@@ -68,7 +76,6 @@ export default class LoginScreen extends React.Component
           {this.errorsubmit()}
         {this.renderButton()}
       </View>
-
     )
   }
 }

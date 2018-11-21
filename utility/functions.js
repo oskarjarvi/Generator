@@ -15,8 +15,7 @@ class Utility
 
     this.storeItem('Class', parent.state.subClass)
 
-    const equipment = await getValues('startingequipment/'+ parent.state.subClass.index)
-    parent.setState({startingGear: equipment})
+
   }
   async getRace(parent)
   {
@@ -90,15 +89,14 @@ getName(array)
   Save(character)
   {
     user = firebase.auth().currentUser.uid
-    firebase.database().ref(`user/${user}`).push(character)
+    firebase.database().ref(`user/characters/${user}`).push(character)
   }
 
   async storeItem(key, item) {
     try {
-        await AsyncStorage.removeItem(key)
         var jsonItem = await AsyncStorage.setItem(key, JSON.stringify(item));
         return jsonItem;
-    } catch (error) {
+        } catch (error) {
       console.log(error.message);
     }
   }
