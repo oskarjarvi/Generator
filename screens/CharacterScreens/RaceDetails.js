@@ -70,12 +70,13 @@ export default class RaceScreen extends React.Component {
       if(this.state.randomizedRace)
       {
         utility.storeItem('CharacterName', this.state.CharacterName)
-
+        currentDate= new Date().toDateString()
         character =
         {
           Name: this.state.CharacterName,
           Race: this.state.subRace,
           Class: this.state.className,
+          Created: currentDate
         }
         utility.Save(character)
       }

@@ -40,19 +40,21 @@ export default class CharacterScreen extends React.Component {
   getCharacters()
   {
      userRef = firebase.auth().currentUser.uid
-    firebase.database().ref(`user/characters/${userRef}`).on('value', (data) => {
+    firebase.database().ref(`user/characters/${userRef}`).once('value', (data) => {
+      if(data.exists()){
       let keys = Object.values(data.val())
       if(keys)
       {
         this.setState({characters: keys})
       }
+    }
     })
   }
 
   renderItem = ({item}) => (
     <ListItem
       title={item.Name}
-      subTitle={item.Race}
+      subtitle={item.Created}
       containerStyle={{ borderBottomWidth: 1, borderBottomColor:"black"}}
       chevronColor="black"
       onPress={() => this.props.navigation.navigate('race', {Race: item.Race, Name: item.Name, Class: item.Class})}/>
@@ -73,7 +75,7 @@ export default class CharacterScreen extends React.Component {
 
   componentWillUnmount() {
       firebase.database().ref(`user/${userRef}`).off('value');
-      console.log(userRef)
+
   }
   render() {
 

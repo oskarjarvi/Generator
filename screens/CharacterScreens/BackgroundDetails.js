@@ -44,10 +44,14 @@ export default class BackgroundScreen extends React.Component {
   }
   getStory()
   {
-    utility.getStory(data.RaceInfo[this.state.Race]).then((item) => {
-      console.log(item)
-      this.setState({Story: item})
-    })
+    if(this.state.Race)
+    {
+      utility.getStory(data.RaceInfo[this.state.Race]).then((item) => {
+        console.log(item)
+        this.setState({Story: item})
+      })
+    }
+
 
   }
   render() {

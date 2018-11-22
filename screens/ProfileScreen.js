@@ -58,8 +58,6 @@ export default class LoginScreen extends React.Component
         <Text>Update Profile</Text>
       </TouchableOpacity>
 
-
-
     </View>
   }
   errorsubmit()
