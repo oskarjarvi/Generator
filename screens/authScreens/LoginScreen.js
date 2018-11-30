@@ -31,7 +31,7 @@ export default class LoginScreen extends React.Component
   onLogin = () =>
   {
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password)
-    .then(()=> {this.props.navigation.navigate('SetUp')})
+    .then(()=> {this.props.navigation.navigate('Main')})
     .catch(() => {this.setState({error:'Authentication failed', loading:false})})
   }
   renderButton()

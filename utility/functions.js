@@ -110,5 +110,14 @@ getName(array)
     }
     return
   }
+  async removeItem(key) {
+    try {
+      await AsyncStorage.removeItem(key);
+      return true;
+    }
+    catch(exception) {
+      return false;
+    }
+  }
 }
 export default Utility

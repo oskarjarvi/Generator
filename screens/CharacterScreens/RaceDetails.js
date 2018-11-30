@@ -31,7 +31,6 @@ export default class RaceScreen extends React.Component {
   componentDidMount() {
     getValues('races').then(res => this.setState({races:res}))
     this.getParams()
-    this.getClassName()
   };
 
   state = {
@@ -56,15 +55,7 @@ export default class RaceScreen extends React.Component {
         </View>
       }
     }
-    async getClassName()
-    {
-      utility.retrieveItem('Class')
-      .then((item) =>
-    {
-      this.setState({className: item})
-    })
 
-    }
     async saveCharacter()
     {
       if(this.state.randomizedRace)
@@ -94,6 +85,11 @@ export default class RaceScreen extends React.Component {
       if(Class)
       {
         utility.storeItem('Class', Class)
+      }
+      else if(!Class)
+      {
+        console.log('nah mate')
+        utility.removeItem('Class')
       }
 
     }

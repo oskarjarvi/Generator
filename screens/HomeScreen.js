@@ -15,28 +15,32 @@ import { WebBrowser } from 'expo';
 import * as firebase from 'firebase';
 import { MonoText } from '../components/StyledText';
 
-// ? require('../assets/images/robot-dev.png')
+const backgroundImage=  require('../assets/images/book.png')
 export default class HomeScreen extends React.Component {
   navigationOptions= {
     header:null
   }
-logout()
-{
-  firebase.auth().signOut()
-  .then(function()
+  logout()
   {
-    console.log('yes')
-  })
-  .catch(function(error){
-    console.log('nope')
-  })
-}
+    firebase.auth().signOut()
+    .then(function()
+    {
+      console.log('yes')
+    })
+    .catch(function(error){
+      console.log('nope')
+    })
+  }
   render() {
     return (
-      <View style={styles.container}>
+      <ImageBackground
+        source={backgroundImage}
+        imageStyle={{resizeMode:"cover"}}
+        style={styles.background}>
+        <View style={styles.container}>
 
           <View style={styles.iconContainer}>
-          <Icon.MaterialCommunityIcons
+            <Icon.MaterialCommunityIcons
               name="logout"
               size={40}
               onPress={() => this.logout()}
@@ -44,30 +48,28 @@ logout()
               />
 
             <Text>Log out</Text>
-           </View>
+          </View>
 
-            <View style={styles.iconContainer}>
-              <Icon.Entypo
-                  name="qq"
-                  size={40}
-                  onPress={() => this.props.navigation.navigate('Characters')}
-                  style={styles.icon}/>
+          <View style={styles.iconContainer}>
+            <Icon.Entypo
+              name="qq"
+              size={40}
+              onPress={() => this.props.navigation.navigate('Characters')}
+              style={styles.icon}/>
 
-                <Text>Generator</Text>
-              </View>
-              <View style={styles.iconContainer}>
-                <Icon.Entypo
-                    name="user"
-                    size={40}
-                    onPress={() => this.props.navigation.navigate('Profile')}
-                    style={styles.icon}/>
+            <Text>Generator</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <Icon.Entypo
+              name="user"
+              size={40}
+              onPress={() => this.props.navigation.navigate('Profile')}
+              style={styles.icon}/>
 
-                  <Text>Profile</Text>
-                </View>
-
-
-      </View>
-
+            <Text>Profile</Text>
+          </View>
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -78,7 +80,6 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor:'#e0e0e2'
   },
   iconContainer:
   {
@@ -86,9 +87,16 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     margin:25,
     borderWidth:0.5,
-    backgroundColor:'#d9d9db',
-    borderColor:'#d0d4db',
+    backgroundColor:'#8b4513',
+    opacity:0.6,
+    borderColor:'#8b4513',
     padding:10
   },
+  background:
+  {
+    width:"100%",
+    height:"100%",
+    flex:1
+  }
 
 });

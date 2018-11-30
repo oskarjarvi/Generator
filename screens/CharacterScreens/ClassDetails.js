@@ -61,7 +61,11 @@ export default class ClassScreen extends React.Component {
       utility.retrieveItem('Class')
       .then((item) =>
       {
-        this.setState({subClass: item})
+        console.log(item)
+        if(item != null)
+        {
+          this.setState({subClass: item})
+        }
       })
 
     }
@@ -78,7 +82,7 @@ export default class ClassScreen extends React.Component {
               style={styles.icon}
               />
             <CustomButton onPress={()=> {utility.getClass(this)}} text="Randomize your Class"/>
-            <Info title="Class" {...this.state.randomizedClass} subData={this.state.subClass} />
+            <Info title="Class" {...this.state.subClass} subData={this.state.subClass} />
             <Text style={styles.sectionTitle}> Proficiencient in</Text>{this.state.subClass && this.renderLists(this.state.subClass.proficiencies)}
             </ImageBackground>
           </View>

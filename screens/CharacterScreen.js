@@ -42,10 +42,11 @@ export default class CharacterScreen extends React.Component {
      userRef = firebase.auth().currentUser.uid
     firebase.database().ref(`user/characters/${userRef}`).once('value', (data) => {
       if(data.exists()){
-      let keys = Object.values(data.val())
-      if(keys)
+      let values = Object.values(data.val())
+      if(values)
       {
-        this.setState({characters: keys})
+        console.log(values)
+        this.setState({characters: values})
       }
     }
     })
